@@ -1,0 +1,38 @@
+#🧩 Programação Funcional e Recursiva.
+# Composição de Funções•
+# Crie uma função que retorna uma nova função equivalente a.
+# Teste com funções matemáticas e de manipulação de strings.
+
+
+#O que é composição de funções?
+# Compor funções significa criar uma nova função
+# que aplica duas (ou mais) funções em sequência.
+# Por exemplo, se temos e, a composição
+# aplica primeiro e depois.
+
+def compor(f, g):
+    return lambda x: f(g(x))
+def dobrar(x):
+    return x * 2
+
+def somar_cinco(x):
+    return x + 5
+
+nova_funcao = compor(dobrar, somar_cinco)
+print(nova_funcao(3))  # Resultado: 16 → dobrar(somar_cinco(3)) = dobrar(8) = 16
+def remover_espacos(s):
+    return s.replace(" ", "")
+
+def colocar_maiusculo(s):
+    return s.upper()
+
+nova_funcao_str = compor(colocar_maiusculo, remover_espacos)
+print(nova_funcao_str("Olá mundo"))  # Resultado: "OLÁMUNDO"
+from functools import reduce
+
+def compor_varias(*funcoes):
+    return reduce(lambda f, g: lambda x: f(g(x)), funcoes)
+
+# Exemplo com 3 funções
+nova = compor_varias(colocar_maiusculo, remover_espacos, lambda s: s + "!!!")
+print(nova("bom dia"))  # Resultado: "BOMDIA!!!"
