@@ -1,0 +1,64 @@
+#Casos de Teste Incluídos
+
+#Normais: operações com valores típicos.
+
+#Erro: divisão por zero, fatorial de número negativo ou não inteiro, raiz de número negativo.
+
+#Borda: fatorial de 0 e 1, soma com zero, divisão com números pequenos.
+
+# math_lib.py
+
+def soma(a, b):
+    return a + b
+
+def divisao(a, b):
+    if b == 0:
+        raise ValueError("Divisão por zero não é permitida.")
+    return a / b
+
+def fatorial(n):
+    if not isinstance(n, int) or n < 0:
+        raise ValueError("Fatorial só é definido para inteiros não negativos.")
+    if n == 0 or n == 1:
+        return 1
+    return n * fatorial(n - 1)
+
+def raiz_quadrada(x):
+    if x < 0:
+        raise ValueError("Raiz quadrada de número negativo não é permitida.")
+    return x ** 0.5
+# test_math_lib.py
+import unittest
+from math_lib import soma, divisao, fatorial, raiz_quadrada
+
+class TestMathLib(unittest.TestCase):
+
+    def test_soma(self):
+        self.assertEqual(soma(2, 3), 5)
+        self.assertEqual(soma(-1, -1), -2)
+        self.assertEqual(soma(0, 0), 0)
+
+    def test_divisao(self):
+        self.assertEqual(divisao(10, 2), 5)
+        self.assertAlmostEqual(divisao(1, 3), 0.3333333, places=6)
+        with self.assertRaises(ValueError):
+            divisao(5, 0)
+
+    def test_fatorial(self):
+        self.assertEqual(fatorial(0), 1)
+        self.assertEqual(fatorial(5), 120)
+        with self.assertRaises(ValueError):
+            fatorial(-1)
+        with self.assertRaises(ValueError):
+            fatorial(3.5)
+
+    def test_raiz_quadrada(self):
+        self.assertEqual(raiz_quadrada(4), 2)
+        self.assertAlmostEqual(raiz_quadrada(2), 1.4142135, places=6)
+        with self.assertRaises(ValueError):
+            raiz_quadrada(-9)
+
+if __name__ == '__main__':
+    unittest.main()
+
+
